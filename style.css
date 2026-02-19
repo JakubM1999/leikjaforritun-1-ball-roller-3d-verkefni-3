@@ -1,0 +1,341 @@
+:root {
+    --bg-color: #e0e0e0;
+    --fg-color: #333333;
+    --accent-color: #2d5a27;
+    --secondary-color: #88cc44;
+    --x-axis: #ff3333; /* Brighter Red */
+    --y-axis: #1a7a1a; /* Balanced vibrant/dark green */
+    --z-axis: #3388ff; /* Brighter Blue */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #a1c4fd;
+    color: var(--fg-color);
+    font-family: 'VT323', monospace;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Background 3D Canvas Container */
+#three-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    image-rendering: pixelated;
+    filter: contrast(1.1) brightness(0.9) saturate(1.2);
+}
+
+#three-bg canvas {
+    width: 100% !important;
+    height: 100% !important;
+    image-rendering: pixelated;
+}
+
+/* CRT Overlay */
+#three-bg::after {
+    content: " ";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.05) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
+    background-size: 100% 3px, 3px 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Main Container - Retro Tech Console Style */
+#slides-container {
+    width: 92%;
+    max-width: 1100px;
+    height: 85vh;
+    background: #e0e0e0; /* Classic 90s Grey Plastic */
+    
+    /* Chunky Molded Plastic Frame */
+    border: 12px solid #999;
+    border-top-color: #ddd;
+    border-left-color: #ddd;
+    border-right-color: #666;
+    border-bottom-color: #666;
+    outline: 2px solid #000;
+    
+    padding: 0; /* Remove padding to handle header bar */
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    font-family: 'VT323', monospace;
+    color: #1a1a1a;
+    box-shadow: 20px 20px 0px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* System Header Bar */
+#slides-container::before {
+    content: "GODOT 3D SYSTEM // MANUAL_V1.0";
+    display: block;
+    width: 100%;
+    background: #2d5a27;
+    color: #fff;
+    padding: 8px 20px;
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    border-bottom: 4px solid #1a3a1a;
+    box-sizing: border-box;
+}
+
+/* Internal Content Area with Dithered Background */
+.slide-inner {
+    flex: 1;
+    padding: 2.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    background-color: #f0f0f0;
+    /* PS1 style 50% Dither Pattern */
+    background-image: radial-gradient(#d0d0d0 20%, transparent 20%);
+    background-size: 4px 4px;
+}
+
+/* Typography - High Contrast Retro */
+h1 {
+    font-size: 4rem;
+    color: #2d5a27;
+    text-shadow: 3px 3px 0px #ffffff, 6px 6px 0px rgba(0,0,0,0.1);
+    margin-bottom: 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+h2 {
+    font-size: 2.2rem;
+    color: #ffffff; 
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    background: #2d5a27;
+    padding: 0.5rem 1.5rem;
+    display: inline-block;
+    border: 3px solid #000;
+    box-shadow: 4px 4px 0px #88cc44;
+}
+
+p, li {
+    font-size: 1.7rem;
+    line-height: 1.3;
+    margin-bottom: 1.2rem;
+    color: #111;
+    text-shadow: 1px 1px 0px #fff;
+}
+
+/* Color Coding for Axes - Vibrant for contrast */
+.x-axis { color: var(--x-axis); font-weight: bold; text-shadow: 1px 1px 0px rgba(0,0,0,0.1); }
+.y-axis { color: var(--y-axis); font-weight: bold; text-shadow: 1px 1px 0px rgba(0,0,0,0.1); }
+.z-axis { color: var(--z-axis); font-weight: bold; text-shadow: 1px 1px 0px rgba(0,0,0,0.1); }
+
+/* Highlights with Icons support */
+strong {
+    color: #1a3a1a;
+    background: #d4f4d4;
+    padding: 2px 8px;
+    font-weight: bold;
+    border-radius: 4px;
+    border-bottom: 2px solid #2d5a27;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+strong img {
+    width: 1.1rem; 
+    height: 1.1rem;
+    display: block;
+    background: #444; 
+    padding: 2px;
+    border-radius: 3px;
+    filter: drop-shadow(0 0 1px rgba(0,0,0,0.3));
+}
+
+.icon-inline {
+    width: 1.1rem;
+    height: 1.1rem;
+    vertical-align: middle;
+    margin-right: 0.2rem;
+    display: inline-block;
+    background: #444;
+    padding: 2px;
+    border-radius: 2px;
+}
+
+/* Buttons - Chunky Plastic Bevel */
+.btn, button, .menu-btn-large {
+    font-family: 'VT323', monospace;
+    background: #ccc;
+    border: 4px solid #666;
+    border-top-color: #fff;
+    border-left-color: #fff;
+    border-right-color: #333;
+    border-bottom-color: #333;
+    color: #000;
+    cursor: pointer;
+    font-size: 1.8rem;
+    padding: 0.5rem 1.5rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+    margin: 10px;
+    display: inline-block;
+}
+
+.btn:active, button:active, .menu-btn-large:active {
+    border: 4px solid #666;
+    border-top-color: #333;
+    border-left-color: #333;
+    border-right-color: #fff;
+    border-bottom-color: #fff;
+    transform: translate(2px, 2px);
+    box-shadow: none;
+}
+
+.menu-btn-large {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    margin: 1rem auto;
+    text-align: left;
+    padding-left: 2rem;
+}
+
+.menu-btn-large:hover {
+    background: #2d5a27;
+    color: #fff;
+    border-color: #1a3a1a;
+}
+
+.menu-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+/* Controls - Beveled Footer */
+.controls {
+    background: #d0d0d0;
+    padding: 1.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 4px solid #999;
+}
+
+.slide-indicator {
+    color: #2d5a27;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+/* Code blocks */
+pre {
+    background-color: #0d1a0d;
+    color: #aaffaa; 
+    border: 3px solid #2d5a27;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    font-family: 'VT323', monospace;
+    font-size: 1.3rem;
+    box-shadow: 8px 8px 0px rgba(0,0,0,0.1);
+}
+
+/* Inline code (filenames, node names in text) */
+code {
+    font-family: inherit;
+    color: #1a3a1a; /* Dark moss green */
+    background: rgba(0,0,0,0.05);
+    padding: 0 4px;
+    border-radius: 2px;
+}
+
+/* Ensure code inside pre blocks stays bright */
+pre code {
+    color: #aaffaa;
+    background: transparent;
+    padding: 0;
+}
+
+/* Layout Helpers */
+.centered {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.slide {
+    display: none;
+    height: 100%;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.slide.active {
+    display: flex;
+}
+
+.video-container {
+    border: 4px solid #2d5a27;
+    background: #000;
+}
+
+/* Fix for ball demo inside video container in guide.html */
+.video-container:has(.ball-demo) {
+    background: transparent;
+    border: none;
+}
+
+video, img {
+    width: 100%;
+    display: block;
+}
+
+/* 3D Ball Demo Element */
+.ball-demo {
+    width: 200px; /* Increased from 150px */
+    height: 200px;
+    margin: 1.5rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.ball-demo canvas {
+    width: 100% !important;
+    height: 100% !important;
+    image-rendering: pixelated; /* Sharp blocky pixels */
+}

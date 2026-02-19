@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Ball Roller - Kynning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="three-bg"></div>
+
+    <div id="slides-container">
+        <!-- Slide 1: Welcome -->
+        <div class="slide active">
+            <div class="slide-inner">
+                <div class="centered">
+                    <h1>VELKOMIN Í 3D</h1>
+                    <p>Í þessum hluta förum við yfir grunnatriðin í 3D vinnslu í Godot.</p>
+                    <div class="ball-demo" style="width: 150px; height: 150px;"></div>
+                    <p>Notaðu <strong>örvatakka</strong> eða <strong>músina</strong> til að vafra.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: X, Y, Z -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>Hvað er 3D?</h2>
+                <div class="grid-2">
+                    <div>
+                        <p>Í 2D notum við <span class="x-axis">X</span> (lárétt) og <span class="y-axis">Y</span> (lóðrétt).</p>
+                        <p>Í 3D bætum við við <span class="z-axis">Z</span> ásnum, sem táknar dýpt.</p>
+                        <ul>
+                            <li><span class="x-axis">X:</span> Rauður ás</li>
+                            <li><span class="y-axis">Y:</span> Grænn ás (Upp/Niður)</li>
+                            <li><span class="z-axis">Z:</span> Blár ás</li>
+                        </ul>
+                    </div>
+                    <div class="video-container">
+                        <div id="axes-demo" style="height: 300px; background: #222;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Mesh & Material -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>Mesh og Material</h2>
+                <p>Til að sjá hlut í 3D þurfum við tvennt:</p>
+                <div class="grid-2">
+                    <div>
+                        <p><strong><img src="images/icons/Node.svg"> 1. Mesh (Líkan):</strong> Formið sjálft (t.d. kúla eða kassi).</p>
+                        <p><strong><img src="images/icons/Edit.svg"> 2. Material (Efni):</strong> Hvernig yfirborðið lítur út (litur, glampi, áferð).</p>
+                    </div>
+                    <div class="video-container">
+                        <img src="https://via.placeholder.com/600x400/2d5a27/ffffff?text=Mesh+vs+Material" alt="Mesh vs Material" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Nodes in 3D -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>3D Nóður í Godot</h2>
+                <p>Í stað <strong><img src="images/icons/Node2D.svg"> Node2D</strong> notum við <strong><img src="images/icons/Node3D.svg"> Node3D</strong>.</p>
+                <ul>
+                    <li><strong><img src="images/icons/MeshInstance3D.svg"> MeshInstance3D:</strong> Til að sýna 3D form.</li>
+                    <li><strong><img src="images/icons/Camera3D.svg"> Camera3D:</strong> "Augun" í leiknum.</li>
+                    <li><strong><img src="images/icons/DirectionalLight3D.svg"> DirectionalLight3D:</strong> Sólin okkar.</li>
+                    <li><strong><img src="images/icons/StaticBody3D.svg"> StaticBody3D:</strong> Fyrir hluti sem hreyfast ekki (gólf).</li>
+                    <li><strong><img src="images/icons/CharacterBody3D.svg"> CharacterBody3D:</strong> Fyrir hluti sem við stýrum (boltinn).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 5: Ready to build -->
+        <div class="slide">
+            <div class="slide-inner">
+                <div class="centered">
+                    <h1>TILBÚIN?</h1>
+                    <p>Nú skulum við byrja að smíða Ball Roller leikinn!</p>
+                    <a href="guide.html" class="btn">Byrja á Tutorial</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="prevBtn">Fyrri</button>
+            <span class="slide-indicator">1 / 5</span>
+            <button id="nextBtn">Næsta</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="bg.js"></script>
+    <script src="ball.js"></script>
+    <script>
+        // Axes Demo in Slide 2
+        function initAxesDemo() {
+            const axesContainer = document.getElementById('axes-demo');
+            if (axesContainer) {
+                const width = axesContainer.clientWidth || 500;
+                const height = axesContainer.clientHeight || 300;
+                
+                const axesScene = new THREE.Scene();
+                axesScene.background = new THREE.Color(0x050505);
+                
+                const axesCamera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+                const axesRenderer = new THREE.WebGLRenderer({ antialias: false });
+                axesRenderer.setPixelRatio(window.devicePixelRatio);
+                axesRenderer.setSize(width, height);
+                axesContainer.innerHTML = ''; // Clear any previous content
+                axesContainer.appendChild(axesRenderer.domElement);
+
+                const axesHelper = new THREE.AxesHelper(5);
+                axesScene.add(axesHelper);
+
+                // Add a more vibrant cube for the Nature Tech theme
+                const cubeGeo = new THREE.BoxGeometry(2.5, 2.5, 2.5);
+                const cubeMat = new THREE.MeshPhongMaterial({ 
+                    color: 0x88cc44, 
+                    flatShading: true, 
+                    wireframe: false,
+                    shininess: 0
+                });
+                const cube = new THREE.Mesh(cubeGeo, cubeMat);
+                axesScene.add(cube);
+                
+                // Add wireframe overlay for that retro feel
+                const wireMat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.3 });
+                const wireCube = new THREE.Mesh(cubeGeo, wireMat);
+                axesScene.add(wireCube);
+                
+                axesScene.add(new THREE.AmbientLight(0xffffff, 0.6));
+                const pLight = new THREE.PointLight(0xffffff, 1);
+                pLight.position.set(5, 5, 5);
+                axesScene.add(pLight);
+
+                axesCamera.position.set(6, 4, 6);
+                axesCamera.lookAt(0, 0, 0);
+
+                function animateAxes() {
+                    requestAnimationFrame(animateAxes);
+                    axesScene.rotation.y += 0.01;
+                    cube.rotation.x += 0.005;
+                    wireCube.rotation.x += 0.005;
+                    axesRenderer.render(axesScene, axesCamera);
+                }
+                animateAxes();
+            }
+        }
+        
+        // Run once loaded
+        window.addEventListener('load', initAxesDemo);
+        // Also run when slide becomes active (in case it was hidden)
+        document.getElementById('nextBtn').addEventListener('click', () => setTimeout(initAxesDemo, 100));
+        document.getElementById('prevBtn').addEventListener('click', () => setTimeout(initAxesDemo, 100));
+    </script>
+</body>
+</html>
