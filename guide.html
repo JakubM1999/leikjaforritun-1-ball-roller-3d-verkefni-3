@@ -33,11 +33,13 @@
         <div class="slide">
             <div class="slide-inner">
                 <h2>1. Nýtt Verkefni</h2>
-                <p>Opnaðu Godot og búðu til nýtt verkefni.</p>
+                <p>Byrjum á því að opna Godot og búa til tómt verkefni.</p>
                 <ul>
-                    <li>Veldu <strong>Forward+</strong> eða <strong>Mobile</strong> renderer.</li>
-                    <li>Gefðu verkefninu nafn (t.d. "Ball Roller 3D").</li>
-                    <li>Smelltu á <strong>Create & Edit</strong>.</li>
+                    <li>Smelltu á <strong><img src="images/icons/Add.svg" class="icon-inline"> Create</strong>.</li>
+                    <li>Gefðu verkefninu nafn, t.d. "Ball Roller 3D".</li>
+                    <li>Veldu möppu til að geyma það í.</li>
+                    <li>Veldu <strong>Forward+</strong> renderer (best fyrir góða 3D grafík á tölvum).</li>
+                    <li>Smelltu á <strong>Create</strong> til að opna verkefnið.</li>
                 </ul>
             </div>
         </div>
@@ -46,12 +48,13 @@
         <div class="slide">
             <div class="slide-inner">
                 <h2>2. Sigling um 3D heiminn</h2>
-                <p>Áður en við byrjum, lærum að hreyfa okkur í 3D glugganum:</p>
+                <p>Áður en við byrjum, þurfum við að kunna að hreyfa okkur í 3D glugganum. Það er mjög mikilvægt til að geta hannað borðin okkar!</p>
                 <ul>
-                    <li><strong>Hægri músarhnappur:</strong> Snúa myndavél (Orbit).</li>
+                    <li><strong>Hægri músarhnappur (halda inni):</strong> Snúa myndavél (Orbit).</li>
+                    <li><strong>W, A, S, D:</strong> Fljúga um heiminn á meðan þú heldur hægri músarhnappi.</li>
                     <li><strong>Miðju músarhnappur (eða Shift + Hægri):</strong> Hliðra (Pan).</li>
-                    <li><strong>Skrunhjól:</strong> Aðdráttur (Zoom).</li>
-                    <li><strong>F-takki:</strong> Fókusa á valda nóðu.</li>
+                    <li><strong>Skrunhjól:</strong> Aðdráttur (Zoom in/out).</li>
+                    <li><strong>F-takki:</strong> Fókusa beint á valda nóðu (mjög gagnlegt ef þú týnist!).</li>
                 </ul>
             </div>
         </div>
@@ -60,11 +63,11 @@
         <div class="slide">
             <div class="slide-inner">
                 <h2>3. Aðalsenan (Main)</h2>
-                <p>Búðu til grunninn að leiknum.</p>
+                <p>Við þurfum senu sem heldur utan um borðið okkar. Þetta er eins og heimurinn sjálfur.</p>
                 <ul>
-                    <li>Smelltu á <strong><img src="images/icons/Add.svg"> 3D Scene</strong> í Scene flipanum.</li>
-                    <li>Endurskírðu nóðuna í <code>Main</code>.</li>
-                    <li>Vistaðu senuna sem <code>main.tscn</code>.</li>
+                    <li>Í Scene flipanum, smelltu á <strong><img src="images/icons/Node3D.svg" class="icon-inline"> 3D Scene</strong> (það býr til Node3D).</li>
+                    <li>Endurskírðu þessa nóðu í <code>Main</code> (hægri smelltu og veldu Rename, eða ýttu á <strong>F2</strong>).</li>
+                    <li>Vistaðu senuna sem <code>main.tscn</code> (Ctrl+S).</li>
                 </ul>
             </div>
         </div>
@@ -72,12 +75,14 @@
         <!-- Slide 5: The Floor Mesh -->
         <div class="slide">
             <div class="slide-inner">
-                <h2>4. Gólfið (Mesh)</h2>
-                <p>Við þurfum palla fyrir boltann.</p>
+                <h2>4. Fyrsti Pallurinn (Gólfið)</h2>
+                <p>Boltinn þarf eitthvað til að rúlla á. Við byrjum á einföldum kassa.</p>
                 <ol>
-                    <li>Bættu við <strong><img src="images/icons/MeshInstance3D.svg"> MeshInstance3D</strong> sem barn af Main.</li>
-                    <li>Í <i>Mesh</i> eiginleikanum hægra megin, veldu <strong>New BoxMesh</strong>.</li>
-                    <li>Stökktu <i>Scale</i> í: <span class="x-axis">20</span>, <span class="y-axis">1</span>, <span class="z-axis">20</span>.</li>
+                    <li>Hægri smelltu á <code>Main</code> og veldu <strong>Add Child Node</strong>.</li>
+                    <li>Leitaðu að <strong><img src="images/icons/MeshInstance3D.svg" class="icon-inline"> MeshInstance3D</strong> og bættu því við. Þetta er nóða til að sýna 3D form.</li>
+                    <li>Hægra megin í <i>Inspector</i>, finndu <strong>Mesh</strong> eiginleikann (þar sem stendur <i>&lt;empty&gt;</i>).</li>
+                    <li>Smelltu og veldu <strong>New BoxMesh</strong>.</li>
+                    <li>Smelltu aftur á BoxMesh myndina til að opna stillingar þess. Settu stærðina (Size) á: <span class="x-axis">X: 10</span>, <span class="y-axis">Y: 0.5</span>, <span class="z-axis">Z: 10</span>. Þá færðu stóran flöt!</li>
                 </ol>
             </div>
         </div>
@@ -85,297 +90,383 @@
         <!-- Slide 6: The Floor Physics -->
         <div class="slide">
             <div class="slide-inner">
-                <h2>5. Gólfið (Eðlisfræði)</h2>
-                <p>Mesh eitt og sér er bara draugur, boltinn myndi falla í gegnum það.</p>
+                <h2>5. Gólfið gert "Snertanlegt"</h2>
+                <p>Eins og er, er gólfið bara mynd (Mesh). Ef við setjum bolta þar, dettur hann beint í gegn! Við verðum að bæta við <strong>eðlisfræði (Physics)</strong>.</p>
                 <ol>
-                    <li>Veldu <i>MeshInstance3D</i> nóðuna.</li>
-                    <li>Efst í glugganum, smelltu á <strong>Mesh -> Create Triamesh Static Sibling</strong>.</li>
-                    <li>Þetta býr til <strong><img src="images/icons/StaticBody3D.svg"> StaticBody3D</strong> með <strong><img src="images/icons/CollisionShape3D.svg"> CollisionShape3D</strong>.</li>
+                    <li>Veldu <i>MeshInstance3D</i> pallinn sem þú varst að búa til í Scene trénu.</li>
+                    <li>Efst í 3D glugganum á tækjastikunni, finndu takkann sem heitir <strong>Mesh</strong>.</li>
+                    <li>Smelltu á hann og veldu <strong>Create Collision Shape...</strong></li>
+                    <li>Í glugganum sem opnast, veldu <strong>Static Body Child</strong> í fyrri fellilistanum og <strong>Trimesh</strong> í þeim seinni (venjulega sjálfgefið). Smelltu á <strong>Create</strong>.</li>
+                </ol>
+                <p>VÁ! Godot bjó sjálfkrafa til <strong><img src="images/icons/StaticBody3D.svg" class="icon-inline"> StaticBody3D</strong> og <strong><img src="images/icons/CollisionShape3D.svg" class="icon-inline"> CollisionShape3D</strong>. Pallurinn okkar er núna solid!</p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Environment & Light -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>6. Umhverfi og Sólin</h2>
+                <p>Í nýjustu útgáfum Godot er mjög auðvelt að bæta við ljósi og himni (Environment) beint úr 3D glugganum.</p>
+                <ul>
+                    <li>Líttu efst í 3D gluggann (við hliðina á <i>View</i> eða litlu sól-myndinni).</li>
+                    <li>Smelltu á <strong>þrjá lóðrétta punkta</strong> (⋮).</li>
+                    <li>Veldu <strong>Add Sun to Scene</strong> (Bætir við <img src="images/icons/DirectionalLight3D.svg" class="icon-inline"> DirectionalLight3D).</li>
+                    <li>Smelltu aftur á punktana og veldu <strong>Add Environment to Scene</strong> (Bætir við <img src="images/icons/WorldEnvironment.svg" class="icon-inline"> WorldEnvironment).</li>
+                </ul>
+                <p><em>Nú ætti heimurinn að vera bjartur og fínn með skuggum þegar þú spilar leikinn! Þú getur svo valið DirectionalLight3D eða WorldEnvironment í Scene trénu og fiktað í stillingunum í Inspector (t.d. breytt litnum á himninum eða birtunni).</em></p>
+            </div>
+        </div>
+
+        <!-- Slide 8: The Player Scene -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>7. Leikmaðurinn (Sena)</h2>
+                <p>Nú er komið að stjörnu leiksins: Boltanum! Við búum til sér senu fyrir hann.</p>
+                <ul>
+                    <li>Smelltu á Plúsinn (<strong>+</strong>) við hliðina á <i>main.tscn</i> flipanum efst til að gera nýja senu.</li>
+                    <li>Veldu <strong>Other Node</strong> sem rót (Root) senunnar.</li>
+                    <li>Leitaðu að <strong><img src="images/icons/RigidBody3D.svg" class="icon-inline"> RigidBody3D</strong>. <i>Af hverju RigidBody? Af því við viljum að eðlisfræðin stýri boltanum þannig hann velti! (Godot 4.6 notar "Jolt Physics" sem er frábært í þetta).</i></li>
+                    <li>Endurskírðu nóðuna í <code>Player</code> og vistaðu sem <code>player.tscn</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 8.5: CharacterBody3D vs RigidBody3D -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>8. Tvær tegundir af leikmönnum</h2>
+                <p>Það eru tvær meginleiðir til að stjórna leikmanni í 3D:</p>
+                <div class="grid-2">
+                    <div>
+                        <h3><img src="images/icons/CharacterBody3D.svg" class="icon-inline"> CharacterBody3D</h3>
+                        <p><strong>Dæmi:</strong> Super Mario eða venjulegir skotleikir (FPS).</p>
+                        <p>Hér stjórnar þú algjörlega hvernig hluturinn hreyfist með kóða. Þyngdarafl og hraði er allt forritað af þér. Hluturinn "hreyfist og rennur" (move and slide) án þess að velta.</p>
+                    </div>
+                    <div>
+                        <h3><img src="images/icons/RigidBody3D.svg" class="icon-inline"> RigidBody3D</h3>
+                        <p><strong>Dæmi:</strong> Rocket League eða okkar Ball Roller leikur.</p>
+                        <p>Hér stjórnar Godot (og Jolt vélin) eðlisfræðinni. Hluturinn dettur, skoppar og rúllar af sjálfu sér. Við stjórnum honum með því að "ýta" á hann (bæta við krafti) frekar en að hreyfa hann beint.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Player Visuals & Physics -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>9. Boltinn (Útlit og Skynjun)</h2>
+                <p>Við verðum að gefa boltanum útlit og "collision" eins og við gerðum við gólfið.</p>
+                <ol>
+                    <li>Bættu <strong><img src="images/icons/MeshInstance3D.svg" class="icon-inline"> MeshInstance3D</strong> sem barni af Player. Settu Mesh í <strong>New SphereMesh</strong>.</li>
+                    <li>Bættu <strong><img src="images/icons/CollisionShape3D.svg" class="icon-inline"> CollisionShape3D</strong> sem öðru barni af Player. Settu Shape í <strong>New SphereShape3D</strong>.</li>
+                    <li>Veldu <code>Player</code> rótarnóðuna. Í Inspector finndu <strong>Physics</strong> og breyttu <i>Angular Damp</i> í t.d. <code>1.5</code>. Þetta gerir það að verkum að boltinn rúllar ekki endalaust heldur hægir aðeins á sér, sem gerir stýringuna þægilegri.</li>
                 </ol>
             </div>
         </div>
 
-        <!-- Slide 7: Directional Light -->
+        <!-- Slide 10: Player Input -->
         <div class="slide">
             <div class="slide-inner">
-                <h2>6. Sólin (Lýsing)</h2>
-                <p>Án ljóss er allt svart.</p>
+                <h2>10. Stýringar (Input Map)</h2>
+                <p>Segjum tölvunni hvaða takka á lyklaborðinu við viljum nota.</p>
                 <ul>
-                    <li>Bættu við <strong><img src="images/icons/DirectionalLight3D.svg"> DirectionalLight3D</strong>.</li>
-                    <li>Færðu það upp og snúðu því þannig að það lýsi á gólfið.</li>
-                    <li>Kveiktu á <i>Shadows</i> í Inspector til að fá skugga.</li>
+                    <li>Farðu efst í <strong>Project -> Project Settings</strong>.</li>
+                    <li>Veldu flipann <strong>Input Map</strong>.</li>
+                    <li>Skrifaðu nafn á nýrri aðgerð (Action) í kassann og ýttu á Add. Búðu til fjórar aðgerðir:
+                        <ul>
+                            <li><code>move_forward</code> (Bættu við W eða Up örinni)</li>
+                            <li><code>move_back</code> (S eða Down)</li>
+                            <li><code>move_left</code> (A eða Left)</li>
+                            <li><code>move_right</code> (D eða Right)</li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
 
-        <!-- Slide 8: WorldEnvironment -->
+        <!-- Slide 11: Player Script -->
         <div class="slide">
             <div class="slide-inner">
-                <h2>7. Umhverfið (Environment)</h2>
-                <p>Gefum leiknum himin og fallega liti.</p>
-                <ul>
-                    <li>Bættu við <strong><img src="images/icons/WorldEnvironment.svg"> WorldEnvironment</strong>.</li>
-                    <li>Í <i>Environment</i> veldu <strong>New Environment</strong>.</li>
-                    <li>Stillingar: <i>Background Mode</i> -> <strong>Sky</strong>.</li>
-                    <li><i>Sky</i> -> <strong>New Sky</strong> -> <strong>New ProceduralSkyMaterial</strong>.</li>
-                </ul>
-            </div>
-        </div>
+                <h2>11. Forritun á Bolta (Script)</h2>
+                <p>Bætum kóða á boltann. Veldu <code>Player</code> nóðuna og smelltu á <strong><img src="images/icons/Script.svg" class="icon-inline"> Attach Script</strong>.</p>
+                <pre><code>extends RigidBody3D
 
-        <!-- Slide 9: Player Scene -->
-        <div class="slide">
-            <div class="slide-inner">
-                <h2>8. Leikmaðurinn (Sena)</h2>
-                <p>Búðu til nýja senu (Ctrl + N) fyrir boltann.</p>
-                <ul>
-                    <li>Root nóða: <strong><img src="images/icons/CharacterBody3D.svg"> CharacterBody3D</strong>.</li>
-                    <li>Skírðu nóðuna <code>Player</code>.</li>
-                    <li>Vistaðu sem <code>player.tscn</code>.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 10: Player Visuals -->
-        <div class="slide">
-            <div class="slide-inner">
-                <h2>9. Boltinn (Útlit)</h2>
-                <p>Gerum boltann sýnilegan.</p>
-                <ul>
-                    <li>Bættu <strong><img src="images/icons/MeshInstance3D.svg"> MeshInstance3D</strong> við Player.</li>
-                    <li>Veldu <strong>New SphereMesh</strong>.</li>
-                    <li>Prófaðu að bæta við <strong>Material</strong> undir <i>Surface Material Override</i> til að lita boltann!</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 11: Player Collision -->
-        <div class="slide">
-            <div class="slide-inner">
-                <h2>10. Boltinn (Árekstur)</h2>
-                <p>Boltinn þarf að vita hvenær hann snertir gólfið.</p>
-                <ul>
-                    <li>Bættu við <strong><img src="images/icons/CollisionShape3D.svg"> CollisionShape3D</strong>.</li>
-                    <li>Veldu <strong>New SphereShape3D</strong>.</li>
-                    <li>Gættu þess að stærðin passi við Mesh-ið.</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 12: Input Mapping -->
-        <div class="slide">
-            <div class="slide-inner">
-                <h2>11. Stýringar (Input Map)</h2>
-                <p>Farðu í <strong>Project -> Project Settings -> Input Map</strong>.</p>
-                <p>Búðu til eftirfarandi aðgerðir og tengdu þær við lykla:</p>
-                <ul>
-                    <li><code>move_forward</code> (t.d. W eða Up)</li>
-                    <li><code>move_back</code> (t.d. S eða Down)</li>
-                    <li><code>move_left</code> (t.d. A eða Left)</li>
-                    <li><code>move_right</code> (t.d. D eða Right)</li>
-                    <li><code>jump</code> (t.d. Space)</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- Slide 13: Movement Script (1) -->
-        <div class="slide">
-            <div class="slide-inner">
-                <h2>12. Forritun (Script)</h2>
-                <p>Bættu <strong><img src="images/icons/Script.svg"> Script</strong> við Player nóðuna.</p>
-                <pre><code>extends CharacterBody3D
-
-const SPEED = 7.0
-const JUMP_VELOCITY = 5.0
+@export var rolling_force = 40.0
 
 func _physics_process(delta):
-    # Gravity
-    if not is_on_floor():
-        velocity += get_gravity() * delta</code></pre>
-            </div>
-        </div>
-
-        <!-- Slide 14: Movement Script (2) -->
-        <div class="slide">
-            <div class="slide-inner">
-                <h2>13. Forritun (Hreyfing)</h2>
-                <p>Bættu þessu við <code>_physics_process</code>:</p>
-                <pre><code>    # Jump
-    if Input.is_action_just_pressed("jump") and is_on_floor():
-        velocity.y = JUMP_VELOCITY
-
-    # Input Direction
+    # Fáum stefnu frá lyklaborðinu (-1 til 1)
     var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
-    var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
     
-    if direction:
-        velocity.x = direction.x * SPEED
-        velocity.z = direction.z * SPEED
-    else:
-        velocity.x = move_toward(velocity.x, 0, SPEED)
-        velocity.z = move_toward(velocity.z, 0, SPEED)
-
-    move_and_slide()</code></pre>
+    # Búum til kraft vigur (Vector3). X ás og Z ás (Y er upp).
+    var force = Vector3(input_dir.x, 0, input_dir.y) * rolling_force
+    
+    # Bætum krafti við miðju boltans til að láta hann velta
+    apply_central_force(force)</code></pre>
+                <p>Þetta tekur inntak frá okkur og ýtir boltanum stöðugt, eðlisfræði-vélin sér svo um að láta hann rúlla!</p>
             </div>
         </div>
 
-        <!-- Slide 15: Instantiate Player -->
+        <!-- Slide 12: Player Group -->
         <div class="slide">
             <div class="slide-inner">
-                <h2>14. Setja í Main</h2>
-                <p>Farðu aftur í <code>main.tscn</code>.</p>
+                <h2>12. Hópar (Groups)</h2>
+                <p>Líkt og í Space Invaders, viljum við að aðrir hlutir (eins og peningar eða dauða-svæði) viti auðveldlega hver leikmaðurinn er. Notum hópa!</p>
                 <ul>
-                    <li>Dragðu <code>player.tscn</code> úr FileSystem yfir í Scene tréð undir Main.</li>
-                    <li>Færðu boltann aðeins upp (<span class="y-axis">Y+</span>) svo hann byrji fyrir ofan gólfið.</li>
+                    <li>Hafðu <code>Player</code> nóðuna valda.</li>
+                    <li>Farðu í <strong>Groups</strong> flipann í hægra spjaldinu (við hliðina á Inspector).</li>
+                    <li>Sláðu inn <code>player</code> og smelltu á <strong>Add</strong>.</li>
                 </ul>
             </div>
         </div>
 
-        <!-- Slide 16: Camera Setup -->
+        <!-- Slide 13: Bring it together -->
         <div class="slide">
             <div class="slide-inner">
-                <h2>15. Myndavélin (Camera)</h2>
-                <p>Við þurfum að sjá hvað er að gerast.</p>
+                <h2>13. Sett í Aðalsenuna</h2>
+                <p>Nú fer þetta að verða að alvöru leik!</p>
                 <ul>
-                    <li>Bættu <strong><img src="images/icons/Camera3D.svg"> Camera3D</strong> við Main senuna (EKKI sem barn af Player).</li>
-                    <li>Færðu hana í: <span class="x-axis">0</span>, <span class="y-axis">5</span>, <span class="z-axis">10</span>.</li>
-                    <li>Hallaðu henni niður (<span class="x-axis">Rotation X: -25</span>).</li>
+                    <li>Farðu til baka í <code>main.tscn</code>.</li>
+                    <li>Smelltu á <strong><img src="images/icons/Instance.svg" class="icon-inline"> Instantiate Child Scene</strong> takkann (keðjan) fyrir ofan Scene tréð (eða ýttu á <strong>Ctrl + Shift + A</strong>).</li>
+                    <li>Veldu <code>player.tscn</code> af listanum og smelltu á Open.</li>
+                    <li><strong>Mikilvægt:</strong> Veldu Player í senunni og dragðu hann aðeins upp (<span class="y-axis">græna örin (Y)</span>) svo hann byrji <i>fyrir ofan</i> gólfið, annars festist hann!</li>
                 </ul>
             </div>
         </div>
 
-        <!-- Slide 17: Camera Smoothing (1) -->
+        <!-- Slide 14: Camera Setup -->
         <div class="slide">
             <div class="slide-inner">
-                <h2>16. Myndavélar-fylgd</h2>
-                <p>Ef við setjum myndavélina sem barn af boltanum mun hún rúlla með honum (mjög ruglandi!).</p>
-                <p>Við notum script til að hún fylgi boltanum mjúklega.</p>
+                <h2>14. Myndavélin (Camera)</h2>
+                <p>Það er langbest að geyma myndavélina inni í <code>Player</code> senunni. Þá er leikmaðurinn "tilbúinn" hvar sem við setjum hann.</p>
                 <ul>
-                    <li>Búðu til script á <i>Camera3D</i>.</li>
-                    <li>Búðu til breytu: <code>@export var target: Node3D</code></li>
+                    <li>Opnaðu <code>player.tscn</code> senuna aftur.</li>
+                    <li>Bættu <strong><img src="images/icons/Camera3D.svg" class="icon-inline"> Camera3D</strong> sem barni af <code>Player</code>.</li>
+                    <li>Færðu hana fyrir aftan og ofan boltann (t.d. Position: <span class="x-axis">X: 0</span>, <span class="y-axis">Y: 4</span>, <span class="z-axis">Z: 8</span>).</li>
+                    <li>Hallaðu henni niður á boltann (Rotation X u.þ.b. -20 gráður).</li>
                 </ul>
+                <p><em>Vandamál: Af því að Player er RigidBody sem veltur, mun myndavélin velta 360° með honum og gera okkur sjóveik! Við lögum það með Scripti á næstu glæru.</em></p>
             </div>
         </div>
 
-        <!-- Slide 18: Camera Smoothing (2) -->
+        <!-- Slide 15: Camera Smoothing -->
         <div class="slide">
             <div class="slide-inner">
-                <h2>17. Camera Script</h2>
+                <h2>15. Fylgi-Myndavél (Script)</h2>
+                <p>Bættu <strong><img src="images/icons/Script.svg" class="icon-inline"> Script</strong> á <code>Camera3D</code> í Player senunni.</p>
                 <pre><code>extends Camera3D
 
-@export var target: Node3D
-@export var offset = Vector3(0, 5, 10)
+@export var offset = Vector3(0, 4, 8)
 
-func _process(delta):
-    if target:
-        var target_pos = target.global_position + offset
-        global_position = global_position.lerp(target_pos, delta * 5.0)
-        look_at(target.global_position)</code></pre>
-                <p>Mundu að velja <strong>Player</strong> í <i>Target</i> eiginleikanum í Inspector!</p>
+func _ready():
+    # Aftengir myndavélina frá snúningi boltans!
+    top_level = true 
+
+func _physics_process(delta):
+    var target_pos = get_parent().global_position + offset
+    
+    # Mjúk hreyfing (lerp) að nýja staðnum
+    global_position = global_position.lerp(target_pos, delta * 5.0)
+    
+    # Horfa alltaf á boltann
+    look_at(get_parent().global_position)</code></pre>
+                <p><strong>Snilld!</strong> Nú er <code>Player</code> senan alveg sjálfstæð og eltir boltann. Hún virkar í hvaða borði sem er án þess að þurfa að stilla eitthvað í Main!</p>
             </div>
         </div>
 
-        <!-- Slide 19: The Coin (Area3D) -->
+        <!-- Slide 15.5: Mouse Look -->
         <div class="slide">
             <div class="slide-inner">
-                <h2>18. Peningar (Coins)</h2>
-                <p>Búðu til nýja senu fyrir pening.</p>
+                <h2>16. Horfa í kringum sig (Mús)</h2>
+                <p>Það er langbest að geta notað músina til að líta í kringum sig. Bætum þessu við <code>Camera3D</code> scriptið okkar:</p>
+                <pre><code>var mouse_sensitivity = 0.005
+
+func _ready():
+    top_level = true 
+    # Felur músina og bindur hana við leikinn
+    Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func _unhandled_input(event):
+    # Skynjum þegar músin hreyfist
+    if event is InputEventMouseMotion:
+        # Snúum offset-inu til hliðar miðað við hreyfingu músarinnar
+        offset = offset.rotated(Vector3.UP, -event.relative.x * mouse_sensitivity)</code></pre>
+                <p><em>Prófaðu núna (F5). Þú getur snúið myndavélinni umhverfis boltann! (Ýttu á ESC til að fá músina aftur).</em></p>
+            </div>
+        </div>
+
+        <!-- Slide 15.6: Relative Movement -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>17. Hreyfing miðað við sjónarhorn</h2>
+                <p>Nú er vandamál: "Áfram" (W) er alltaf sama átt í heiminum, sama hvert myndavélin horfir. Lögum það inni í <code>Player</code> scriptinu.</p>
+                <p>Skiptu út `force` línunum inni í `_physics_process` fyrir þetta:</p>
+                <pre><code>    var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+    
+    # Finnum áttirnar sem myndavélin horfir
+    var camera = $Camera3D
+    var cam_forward = -camera.global_transform.basis.z
+    var cam_right = camera.global_transform.basis.x
+    
+    # Pössum að horfa beint áfram (ekki upp eða niður)
+    cam_forward.y = 0 
+    cam_right.y = 0
+    cam_forward = cam_forward.normalized()
+    cam_right = cam_right.normalized()
+    
+    # Reiknum nýjan kraft miðað við myndavélina (W skilar -1, svo við snúum því við)
+    var force = (cam_right * input_dir.x + cam_forward * -input_dir.y) * rolling_force
+    apply_central_force(force)</code></pre>
+            </div>
+        </div>
+
+        <!-- Slide 16: The Void (Falling Down) -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>18. Dauðasvæði (Fall Zone)</h2>
+                <p>Hvað gerist ef þú keyrir út af pallinum? Boltinn dettur að eilífu. Við grípum hann og endurræsum borðið.</p>
+                <ol>
+                    <li>Bættu <strong><img src="images/icons/Area3D.svg" class="icon-inline"> Area3D</strong> við <code>Main</code> senuna og skírðu það <code>FallZone</code>.</li>
+                    <li>Bættu <strong><img src="images/icons/CollisionShape3D.svg" class="icon-inline"> CollisionShape3D</strong> við <code>FallZone</code>. Settu það sem stóran kassa (BoxShape3D). <strong>Mikilvægt:</strong> Smelltu á BoxShape3D myndina í Inspector og breyttu <strong>Size</strong> eiginleikanum beint í stærðina (<span class="x-axis">100</span>, <span class="y-axis">2</span>, <span class="z-axis">100</span>). <em>Ekki</em> nota Scale verkfærið á sjálfa Collision nóðuna!</li>
+                    <li>Færðu <code>FallZone</code> nóðuna langt niður undir borðið (<span class="y-axis">Y = -10</span>).</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 17: FallZone Script -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>19. Tengjum Dauðasvæðið</h2>
+                <p>Við viljum að Area3D "skynji" þegar boltinn klessir á kassan undir borðinu.</p>
+                <ol>
+                    <li>Bættu <strong>Script</strong> við <code>FallZone</code>.</li>
+                    <li>Farðu í <strong>Signals</strong> flipann hægra megin (við hliðina á Inspector) og tvísmelltu á merkið (signal) <code>body_entered(body: Node3D)</code>. Tengdu það við scriptið.</li>
+                </ol>
+                <pre><code>extends Area3D
+
+func _on_body_entered(body):
+    # Athugum hvort það var boltinn okkar sem datt!
+    if body.is_in_group("player"):
+        # Endurræsum núverandi senu!
+        get_tree().reload_current_scene()</code></pre>
+            </div>
+        </div>
+
+        <!-- Slide 18: Coins Setup -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>20. Peningar (Coins)</h2>
+                <p>Gerum leikinn áhugaverðari. Safnaðu gullpeningum! Búum til nýja senu.</p>
                 <ul>
-                    <li>Root nóða: <strong><img src="images/icons/Area2D.svg"> Area3D</strong> (Area3D er notað til að skynja snertingu).</li>
-                    <li>Bættu við <i>MeshInstance3D</i> (CylinderMesh) og <i>CollisionShape3D</i> (CylinderShape3D).</li>
-                    <li>Skírðu nóðuna <code>Coin</code>.</li>
+                    <li>Smelltu á <strong>+</strong> til að gera nýja senu. Rótin á að vera <strong><img src="images/icons/Area3D.svg" class="icon-inline"> Area3D</strong> (Kallað <code>Coin</code>).</li>
+                    <li>Bættu við <strong><img src="images/icons/MeshInstance3D.svg" class="icon-inline"> MeshInstance3D</strong> (CylinderMesh).</li>
+                    <li>Gerðu CylinderMesh peningalegan (stækkaðu X og Z, minnkaðu Y, t.d. Hæð: 0.1, Radíus: 0.4). Snúðu honum uppá rönd og gefðu honum gulan Material.</li>
+                    <li>Bættu við <strong><img src="images/icons/CollisionShape3D.svg" class="icon-inline"> CollisionShape3D</strong> (CylinderShape3D) sem er aðeins stærra en peningurinn.</li>
+                    <li>Vistaðu senuna sem <code>coin.tscn</code>.</li>
                 </ul>
             </div>
         </div>
 
-        <!-- Slide 20: Coin Script -->
+        <!-- Slide 19: Coins Script -->
         <div class="slide">
             <div class="slide-inner">
-                <h2>19. Snúningur á pening</h2>
-                <p>Gerum peninginn lifandi með scripti.</p>
+                <h2>21. Snúningur og Söfnun</h2>
+                <p>Bættu scripti við <code>Coin</code> rótina til að láta hann snúast og hverfa.</p>
+                <ol>
+                    <li>Tengdu <code>body_entered(body)</code> signalið alveg eins og í FallZone.</li>
+                </ol>
                 <pre><code>extends Area3D
 
+# Hversu hratt peningurinn snýst
+var rotation_speed = 3.0
+
 func _process(delta):
-    rotate_y(delta * 3.0)
+    # Látum hann snúast um Y ásinn allan tímann
+    rotate_y(rotation_speed * delta)
 
 func _on_body_entered(body):
-    if body.name == "Player":
-        # Hér gætum við bætt við stigum!
-        queue_free() # Peningurinn hverfur</code></pre>
-                <p>Tengdu <strong>body_entered</strong> signalið í <i>Node</i> flipanum!</p>
+    if body.is_in_group("player"):
+        # Ef við hefðum stigakerfi, myndum við kalla á það hér!
+        # Í bili, látum við peninginn bara hverfa.
+        queue_free()</code></pre>
+            </div>
+        </div>
+
+        <!-- Slide 20: The Goal -->
+        <div class="slide">
+            <div class="slide-inner">
+                <h2>22. Marklínan (Finish Line)</h2>
+                <p>Borðið þarf enda. Búðu til nýja senu nákvæmlega eins og peninginn.</p>
+                <ol>
+                    <li>Ný sena -> <strong><img src="images/icons/Area3D.svg" class="icon-inline"> Area3D</strong> (Kallað <code>Goal</code>).</li>
+                    <li>Gefðu því flott Mesh (T.d. stór glóandi grænn BoxMesh).</li>
+                    <li>CollisionShape3D sem hylur svæðið.</li>
+                    <li>Tengdu <code>body_entered</code> merkið (signal) í script.</li>
+                </ol>
+                <pre><code>extends Area3D
+
+func _on_body_entered(body):
+    if body.is_in_group("player"):
+        print("MARK! ÞÚ VANNST!")
+        # Þegar UI er komið getum við sýnt "You Win" skjá.
+        # Í bili byrjum við borðið aftur þegar maður vinnur.
+        get_tree().reload_current_scene()</code></pre>
             </div>
         </div>
 
         <!-- Slide 21: Expanding the level -->
         <div class="slide">
             <div class="slide-inner">
-                <h2>20. Hönnun borðsins</h2>
-                <p>Nú er kominn tími til að breyta þessu í alvöru leik!</p>
-                <p>Notaðu verkfærin til að búa til skemmtilega braut:</p>
+                <h2>23. Hönnun Borðsins</h2>
+                <p>Nú er allt tilbúið vélrænt (mechanics). Tími til að sýna hönnunarhæfileikana!</p>
+                <p>Farðu í <code>main.tscn</code> og notaðu verkfærin til að byggja flókna braut úr kössum, fylltu hana af peningum og settu Goal í endann.</p>
+                <p><em>Ath: Í Godot 4.6 eru <strong>Select</strong> (Q) og <strong>Transform</strong> (W, E, R) verkfærin aðskilin. Veldu fyrst hlutinn (Q) og færðu/snúðu honum svo (W, E).</em></p>
                 <ul>
-                    <li><strong>Ctrl + D:</strong> Fjölfalda palla (Duplicate).</li>
-                    <li><strong>E:</strong> Snúa pöllum (Rotate) til að búa til brekkur.</li>
-                    <li><strong>R:</strong> Stækka/minnka palla (Scale).</li>
+                    <li><strong>Ctrl + D:</strong> Fjölfalda (Duplicate) hluti hratt. Frábært fyrir palla og peninga!</li>
+                    <li><strong>W:</strong> Færa palla (Move) til að raða þeim.</li>
+                    <li><strong>E:</strong> Snúa pöllum (Rotate) til að búa til brekkur niður eða upp.</li>
+                    <li><strong>R:</strong> Stækka/minnka palla (Scale). Búðu til örmjóar brýr eða víða velli!</li>
                 </ul>
-                <p><strong>Verkefni:</strong> Búðu til braut sem er allavega 5 pallar að lengd og með einni beygju.</p>
+                <p>Passaðu að <strong>FallZone</strong> sé alltaf nógu stórt til að grípa leikmanninn hvar sem hann dettur niður.</p>
             </div>
         </div>
 
-        <!-- Slide 22: Moving Platforms -->
-        <div class="slide">
-            <div class="slide-inner">
-                <h2>BÓNUS 1: Hreyfanlegir Pallar</h2>
-                <p>Gerum pall sem fer upp og niður.</p>
-                <ol>
-                    <li>Breyttu <i>StaticBody3D</i> í <strong>AnimatableBody3D</strong> (hægri smelltu -> Change Type).</li>
-                    <li>Bættu við <strong><img src="images/icons/Add.svg"> AnimationPlayer</strong> nóðu.</li>
-                    <li>Búðu til nýja hreyfimynd (Animation -> New).</li>
-                    <li>Veldu pallinn, farðu í <i>Transform -> Position</i> í Inspector og ýttu á lykilinn <img src="images/icons/Tools.svg" class="icon-inline">.</li>
-                    <li>Færðu tímalínuna, færðu pallinn og ýttu aftur á lykilinn.</li>
-                    <li>Kveiktu á <strong>Autoplay</strong> (A+ takkinn í Animation glugganum).</li>
-                </ol>
-            </div>
-        </div>
-
-        <!-- Slide 23: Level Goal -->
-        <div class="slide">
-            <div class="slide-inner">
-                <h2>BÓNUS 2: Markmarkið</h2>
-                <p>Hvernig vinnur maður leikinn?</p>
-                <ol>
-                    <li>Búðu til <strong>Area3D</strong> sem heitir <code>Goal</code> með áberandi Mesh.</li>
-                    <li>Tengdu <code>body_entered</code> signalið við script.</li>
-                </ol>
-                <pre><code>func _on_goal_body_entered(body):
-    if body.name == "Player":
-        print("ÞÚ VANNST!")
-        # Eða endurræsa leikinn:
-        get_tree().reload_current_scene()</code></pre>
-            </div>
-        </div>
-
-        <!-- Slide 24: Summary -->
+        <!-- Slide 25: Summary / Bonus -->
         <div class="slide">
             <div class="slide-inner">
                 <div class="centered">
-                    <h1>FLOTT HJÁ ÞÉR!</h1>
-                    <p>Þú ert búin(n) með grunninn að 3D leiknum þínum.</p>
-                    <p>Í næsta verkefni munum við fínpússa leikinn með:</p>
-                    <ul>
-                        <li>Notendaviðmóti (UI)</li>
-                        <li>Hljóðum og tónlist</li>
-                        <li>Elda- og rykögnum (Particles)</li>
-                    </ul>
+                    <h1>FRÁBÆRT HJÁ ÞÉR!</h1>
+                    <p>Þú ert komin(n) með "Retro Ball Roller" alveg eins og gömlu leikirnir!</p>
+                    <p><strong>Bónusverkefni:</strong> Prófaðu að bæta leikinn með því að leika þér með fleiri liti, áferðir (Materials) á pallana, ryk/elda-agnir (Particles), eða jafnvel forrita stig og tímamæli í scriptið!</p>
+                    <p><em>Athugið: Í næsta verkefni (sem við höfum eina viku í) munum við fínpússa leikinn og bæta við fallegu notendaviðmóti (UI), hljóðbrellum og tónlist. Geymdu það þangað til!</em></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 26: Skil á Innu -->
+        <div class="slide">
+            <div class="slide-inner">
+                <div class="centered">
+                    <h1>SKIL Á INNU</h1>
+                    <p>Til þess að kennarinn geti opnað leikinn á sinni tölvu þarftu að skila honum rétt!</p>
                     <br>
+                    <ul style="text-align: left; display: inline-block;">
+                        <li><strong>1.</strong> Lokaðu Godot alveg (til að passa að allt sé vistað).</li>
+                        <li><strong>2.</strong> Finndu möppuna þar sem þú vistaðir verkefnið í tölvunni þinni.</li>
+                        <li><strong>3.</strong> Hægri smelltu á möppuna og veldu <strong>Compress to ZIP file</strong> (eða Send to -> Compressed (zipped) folder).</li>
+                        <li><strong>4.</strong> Skilaðu <strong>.zip</strong> skránni á Innu.</li>
+                    </ul>
+                    <br><br>
                     <a href="index.html" class="btn">Aftur í valmynd</a>
                 </div>
             </div>
         </div>
 
-        <div class="controls">
-            <button id="prevBtn">Fyrri</button>
-            <span class="slide-indicator">1 / 24</span>
-            <button id="nextBtn">Næsta</button>
-        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn">Fyrri</button>
+        <span class="slide-indicator">1 / 26</span>
+        <button id="nextBtn">Næsta</button>
     </div>
 
     <script src="script.js"></script>
